@@ -1,1 +1,1 @@
-DOMAIN-SUFFIX ngabbs.com
+DOMAIN-SUFFIX,ngabbs.com

@@ -1,2 +1,3 @@
 DOMAIN-SUFFIX,ngabbs.com
 DOMAIN-SUFFIX,keylol.com
+DOMAIN-SUFFIX,steampy.com

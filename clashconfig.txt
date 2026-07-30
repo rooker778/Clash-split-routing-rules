@@ -1,28 +1,40 @@
 [custom]
-;解决DNS泄露，无分流群组
-ruleset=🚀 节点选择,[]DOMAIN-SUFFIX,xn--ngstr-lra8j.com
-ruleset=🚀 节点选择,[]DOMAIN-SUFFIX,services.googleapis.cn
-ruleset=🚀 节点选择,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCNProxyIP.list
-ruleset=🚀 节点选择,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/OpenAi.list
+; 极简无分流群组配置（防 DNS 泄露与优先级优化版）
+
+; 1. 优先放行局域网与防止重定向
 ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
 ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list
-ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list
-ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaMedia.list
+
+; 2. 广告拦截（提至前排，防止被后方的 ChinaDomain 优先匹配放行）
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyList.list
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyListChina.list
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list
-ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list
-ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIp.list
-ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list
+
+; 3. 强制走代理的特殊域名与服务
+ruleset=🚀 节点选择,[]DOMAIN-SUFFIX,xn--ngstr-lra8j.com
+ruleset=🚀 节点选择,[]DOMAIN-SUFFIX,services.googleapis.cn
+ruleset=🚀 节点选择,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCNProxyIP.list
+ruleset=🚀 节点选择,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OpenAi.list
+
+; 4. 国内域名直连（纯域名匹配，不触发 DNS 解析）
+ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list
+ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaMedia.list
 ruleset=DIRECT,https://raw.githubusercontent.com/rooker778/Clash-split-routing-rules/refs/heads/main/Direct.list
+
+; 5. 国内 IP / GEOIP 直连（追加 no-resolve，切断 IP 比对引发的本地 DNS 查询）
+ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list,no-resolve
+ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIp.list,no-resolve
+ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list
 ruleset=DIRECT,[]GEOIP,CN,no-resolve
+
+; 6. 兜底策略（其余未匹配流量全部走代理）
 ruleset=🚀 节点选择,[]FINAL
 
+; 策略组定义
 custom_proxy_group=🚀 节点选择`select`[]♻️ 自动选择`[]DIRECT`.*
 custom_proxy_group=♻️ 自动选择`url-test`^(?!.*(?i)(倍率|[2-9]x|\d{2,}x|剩余|到期|过期|重置|官网|公告|通知|客服)).*`https://www.gstatic.com/generate_204`300,5000,50
 
 enable_rule_generator=true
 overwrite_original_rules=true
-

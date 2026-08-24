@@ -1,16 +1,15 @@
 [custom]
 ; 极简无分流群组配置（防 DNS 泄露与优先级优化版）
 
-; 1. 优先放行白名单（防误杀，必须放在 REJECT 之前才能生效）
-ruleset=DIRECT,[]DOMAIN,data.bilibili.com
+; 1. 优先放行局域网与防止重定向
 ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
 ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list
 
-; 2. 广告与隐私拦截
+; 2. 广告拦截（提至前排，防止被后方的 ChinaDomain 优先匹配放行）
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyList.list
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyListChina.list
-ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list
+ruleset=REJECT,https://raw.githubusercontent.com/rooker778/Clash-split-routing-rules/refs/heads/main/BanEasyPrivacy.list
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list
 
 ; 3. 强制走代理的特殊域名与服务

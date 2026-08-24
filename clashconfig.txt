@@ -1,11 +1,12 @@
 [custom]
 ; 极简无分流群组配置（防 DNS 泄露与优先级优化版）
 
-; 1. 优先放行局域网与防止重定向
+; 1. 优先放行白名单（防误杀，必须放在 REJECT 之前才能生效）
+ruleset=DIRECT,[]DOMAIN,data.bilibili.com
 ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
 ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list
 
-; 2. 广告拦截（提至前排，防止被后方的 ChinaDomain 优先匹配放行）
+; 2. 广告与隐私拦截
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyList.list
 ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyListChina.list
@@ -34,7 +35,7 @@ ruleset=🚀 节点选择,[]FINAL
 
 ; 策略组定义
 custom_proxy_group=🚀 节点选择`select`[]♻️ 自动选择`[]DIRECT`.*
-custom_proxy_group=♻️ 自动选择`url-test`^(?!.*(?i)(倍率|[2-9]x|\d{2,}x|剩余|到期|过期|重置|官网|公告|通知|客服|境外)).*`https://www.gstatic.com/generate_204`300,5000,50
+custom_proxy_group=♻️ 自动选择`url-test`^(?!.*(?i)(倍率|[2-9]x|\d{2,}x|剩余|到期|过期|重置|官网|公告|通知|客服)).*`https://www.gstatic.com/generate_204`300,5000,50
 
 enable_rule_generator=true
 overwrite_original_rules=true

@@ -15,8 +15,8 @@ ruleset=REJECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ba
 ; 3. 强制走代理的特殊域名与服务
 ruleset=🚀 节点选择,[]DOMAIN-SUFFIX,xn--ngstr-lra8j.com
 ruleset=🚀 节点选择,[]DOMAIN-SUFFIX,services.googleapis.cn
-ruleset=🚀 节点选择,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCNProxyIP.list
-ruleset=🚀 节点选择,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OpenAi.list
+ruleset=🚀 节点选择,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/GoogleCNProxyIP.list
+ruleset=🚀 节点选择,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/OpenAi.list
 
 ; 4. 国内域名直连（纯域名匹配，不触发 DNS 解析）
 ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list
